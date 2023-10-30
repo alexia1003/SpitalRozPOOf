@@ -5,9 +5,11 @@ import java.util.logging.Logger;
 
 public class Spital {
     private static Spital instance;
+    private int numarMedici;    //nr. total medici angajati
+    private int numarAsistenti; //nr. total asistenti angajati
     private static final Logger LOGGER = Logger.getLogger(Spital.class.getName());
 
-    // Private constructor to prevent instantiation from outside
+    // Constructor privat pt. a preveni instantierea din exterior
     private Spital() {
     }
 
@@ -19,27 +21,40 @@ public class Spital {
         return instance;
     }
 
-    public void intereneazaPacient(int numarPacientiInternati) {
-        LOGGER.log(Level.INFO, "Pacienti internati: " + numarPacientiInternati);
+    public void angajeazaMedic(int numarMediciAngajati) {
+        numarMedici += numarMediciAngajati;
+        LOGGER.log(Level.INFO, "Medici angajati: " + numarMediciAngajati);
     }
 
-    public void externeazaPacient(int numarPacientiExternati) {
-        LOGGER.log(Level.INFO, "Pacienti externati: " + numarPacientiExternati);
+    public void angajeazaAsistent(int numarAsistentiAngajati) {
+        numarAsistenti += numarAsistentiAngajati;
+        LOGGER.log(Level.INFO, "Asistenti angajati: " + numarAsistentiAngajati);
+    }
+
+    public void calculTotalAngajati() {
+        LOGGER.log(Level.INFO, "Total angajati: \nMedici ~ " + numarMedici + ", Asistenti ~ " + numarAsistenti);
     }
 
     public static void main(String[ ] args) {
         Spital spital = new Spital();
 
-        spital.intereneazaPacient(10);
-        spital.externeazaPacient(6);
+        spital.angajeazaMedic(1);
+        spital.angajeazaAsistent(4);
         try {
             Thread.sleep(6000); // Delay for 6000 milliseconds (6 seconds)
         } catch (InterruptedException e) {
             LOGGER.log(Level.SEVERE, "Thread interrupted", e);
             Thread.currentThread().interrupt();
         }
-        spital.intereneazaPacient(7);
-        spital.externeazaPacient(5);
+        spital.angajeazaMedic(3);
+        spital.angajeazaAsistent(2);
+        try {
+            Thread.sleep(6000); // Delay for 6000 milliseconds (6 seconds)
+        } catch (InterruptedException e) {
+            LOGGER.log(Level.SEVERE, "Thread interrupted", e);
+            Thread.currentThread().interrupt();
+        }
+        spital.calculTotalAngajati(); // Calculeaza toti angajatii
     }
 
 }
