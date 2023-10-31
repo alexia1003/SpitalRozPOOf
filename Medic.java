@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Medic { //implements IActMedical  {
+public class Medic implements IActMedical  {
     private String nume;
     private String prenume;
     private String ID;
@@ -76,8 +76,12 @@ public class Medic { //implements IActMedical  {
             ", ID: " + ID +
             ", varsta: " + varsta +
             ", sectie: " + sectie +
+            ", sefSectie: " + sefSectie +
             ", tratament: " + tratament.toString() +
             ", medicamente: " + medicamente.toString() +
+            ", totalOreLucrate: " + totalOreLucrate +
+            ", totalZileLucrate: " + totalZileLucrate +
+            ", totalPacienti: " + totalPacienti +
             '}';
     }
 
@@ -87,7 +91,7 @@ public class Medic { //implements IActMedical  {
         return nume;
     }
     // Getter pt nume
-    public String getPreume() {
+    public String getPrenume() {
         return prenume;
     }
     // Getter pt ID
@@ -130,6 +134,12 @@ public class Medic { //implements IActMedical  {
        // Logger.log("."); //
     }
 */
+
+
+    @Override
+    public void actMedical() {
+        System.out.println("Act medical realizat.");
+    }
 
 
     //   M E T O D E   \\
@@ -182,7 +192,7 @@ public class Medic { //implements IActMedical  {
     }
 
 
-     
+    // Metoda de clasa pt a cauta medic dupa nume sau prenume
     public static void cautareMedicDupaNume(List<Medic> medici, String numeCautat) {
         for (Medic medic : medici) 
         { if (medic.nume.equals(numeCautat) || medic.prenume.equals(numeCautat)) 
@@ -218,8 +228,16 @@ public class Medic { //implements IActMedical  {
         }
     }
 
+    // Metoda pt a seta seful de sectie
+    public void setSefSectie(String sefSectie) {
+        this.sefSectie = sefSectie;
+    }
 
-
+    // Metoda pt operatii
+    //public void operatieRealizata() {
+    //    System.out.println("Operatie realizata cu succes.");
+    //    // Logger.log(".");
+    //}
 
     public static void main(String[ ] args) {
         Medic medic1 = new Medic("Barbu", "Ana", "2367", "Cardiologie");
@@ -270,6 +288,14 @@ public class Medic { //implements IActMedical  {
         System.out.println("Tratamentul scris de medic 1:");
         System.out.println(medic1.tratament.toString());
     
+        medic1.setSefSectie("Ianos Annamaria");
+        System.out.println(medic1.sefSectie);
+        medic1.operatieRealizata();
+
+        System.out.println(medic1.toString());
+        
+        System.out.println("\nMetoda din interfata:");
+        medic1.actMedical();
 
 }
 }

@@ -2,67 +2,68 @@ package SpitalRoz;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.awt.*;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class MainFrame extends JFrame {
-    private JTextField textField;
-    private JComboBox<String> dropdown;
-    private JCheckBox checkBox;
-
 
     public MainFrame() {
-        setTitle("Spital Roz");
-        setSize(400, 300);
+        setTitle("Personal medical");
+        setSize(300, 200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-
         JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setBackground(Color.PINK);
 
-        // Dropdown
-        String[] dropdownOptions = {"Medic", "Medic Rezident", "Asistent"};
-        dropdown = new JComboBox<>(dropdownOptions);
-        panel.add(dropdown);
+        // Drop-down menu
+        String[] roluri = {"Medic", "Asistent"};
+        JComboBox<String> roluriDropdown = new JComboBox<>(roluri);
+        panel.add(roluriDropdown);
 
-        // Textbox
-        textField = new JTextField(20);
-        panel.add(textField);
+        // Password field
+        JTextField parolaField = new JTextField(20);
+        panel.add(parolaField);
 
-        // Checkbox
-        checkBox = new JCheckBox("Check me");
-        panel.add(checkBox);
+        // Check box
+        JCheckBox medicRezidentCheckBox = new JCheckBox("Rezident");
+        panel.add(medicRezidentCheckBox);
 
-        // Button
-        JButton button = new JButton("Submit");
-        button.addActionListener(new ActionListener() {
+        // Submit button
+        JButton submitButton = new JButton("Submit");
+        submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String text = textField.getText();
-                String selectedOption = (String) dropdown.getSelectedItem();
-                boolean isChecked = checkBox.isSelected();
+                String rolSelectat = (String) roluriDropdown.getSelectedItem();
+                String parola = parolaField.getText();
+                boolean esteMedicRezident = medicRezidentCheckBox.isSelected();
+                String parolaCorecta = "1234"; // Correct password
 
-                // Validate the text field
-                if (text.isEmpty()) {
-                    JOptionPane.showMessageDialog(MainFrame.this, "Please enter some text", "Error", JOptionPane.ERROR_MESSAGE);
-                } else {
-                    System.out.println("Text: " + text);
-                    System.out.println("Dropdown Selected Option: " + selectedOption);
-                    System.out.println("Checkbox State: " + isChecked);
-                }
+                if (parola.equals(parolaCorecta)) {
+                new Window3(MainFrame.this, "Loggare", "Esti sigur ca vrei sa te loghezi?");
+
+                //JOptionPane.showMessageDialog(MainFrame.this, "Operatiune efectuată  cu succes");
+                new Window1(rolSelectat, parola, esteMedicRezident).setVisible(true);
+
+                System.out.println("Selected Role: " + rolSelectat);
+                System.out.println("Password: " + parola);
+                System.out.println("Medic Rezident: " + esteMedicRezident);
+            } else {
+                JOptionPane.showMessageDialog(MainFrame.this, "Parola incorecta. Va rugam incercati din nou.", "Eroare", JOptionPane.ERROR_MESSAGE);
+            }            
             }
         });
-        panel.add(button);
+        panel.add(submitButton);
 
         add(panel);
         setVisible(true);
-
-      
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             new MainFrame();
-
         });
     }
-    
 }
