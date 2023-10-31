@@ -51,7 +51,9 @@ abstract class Asistent {
         LOGGER.log(Level.INFO, "Asistentul ofera suport pacientilor.");
     }
 
+    /* 
     public static void main(String[ ] args) {
       //  
     }
+    */
 }
