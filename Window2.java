@@ -1,7 +1,6 @@
 package SpitalRoz;
 
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.io.BufferedWriter;
@@ -9,13 +8,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Window2 extends JFrame {
-
-    private ArrayList<String> dataList;
+public class Window2 extends Window0 {
 
     public Window2(ArrayList<String> dataList) {
-        this.dataList = dataList;
-
+        super(dataList);
         setTitle("Notite Garda");
         setSize(400, 300);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -43,13 +39,14 @@ public class Window2 extends JFrame {
                     dataList.add(notitePacienti);
                     dataList.add(notiteImportante);
 
-                    scrieDateFisier(dataList);
+                    writeDataToFile();
                     JOptionPane.showMessageDialog(Window2.this, "Operatiune efectuată  cu succes");
+                    openSingletonWindow();
                     dispose();
                     System.out.println("Lista finala de date: " + dataList);
                 } else {
                     JOptionPane.showMessageDialog(Window2.this, "Introduce valori in toate campurile", "Eroare", JOptionPane.ERROR_MESSAGE);
-                }            
+                }
             }
         });
         panel.add(submitButton);
@@ -58,24 +55,19 @@ public class Window2 extends JFrame {
         setVisible(true);
     }
 
-    private void scrieDateFisier(ArrayList<String> dataList) {
+    private void openSingletonWindow() {
+        WindowS.getInstance();
+    }
+
+    @Override
+    protected void writeDataToFile() {
         try {
-            BufferedWriter scriere = new BufferedWriter(new FileWriter("date.txt", true));
-            for (String data : dataList) {
-                scriere.write(data + "\n");
-            }
-            scriere.close();
-            System.out.println("Datele au fost scrise in fisier.");
+            BufferedWriter writer = new BufferedWriter(new FileWriter("date.txt", true));
+            writer.write(this.toString());
+            writer.close();
+            System.out.println("Data written to the file.");
         } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            ArrayList<String> sampleData = new ArrayList<>();
-            new Window2(sampleData);
-        });
-    }
 }
-

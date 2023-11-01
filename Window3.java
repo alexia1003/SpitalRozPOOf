@@ -4,64 +4,42 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Window3 extends JDialog {
         
-    public Window3(JFrame parent, String title, String message) {
-            super(parent, title, true);
-            JPanel panel = new JPanel();
-            JLabel label = new JLabel(message);
-            panel.add(label);
-            JButton button = new JButton("OK");
-            button.addActionListener(e -> dispose());
-            panel.add(button);
-            getContentPane().add(panel);
-            setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-            pack();
-            setLocationRelativeTo(parent);
-            setVisible(true);
-        }
-}
- 
+    public Window3(JFrame frame, String titlu, String mesaj) {
+        super(frame, titlu, true);
+        final Logger LOGGER = Logger.getLogger(Spital.class.getName());
+        JPanel panel = new JPanel();
+        JLabel label = new JLabel(mesaj);
+        panel.add(label);
 
-
-
-/* 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Main Window");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(300, 200);
-        frame.setLocationRelativeTo(null);
-
-        JButton openModalButton = new JButton("Deschide mesaj.");
-        openModalButton.addActionListener(new ActionListener() {
+        JButton button = new JButton("Da");
+        button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JDialog dialog = new JDialog(frame, "Modal Dialog", true);
-                dialog.setLayout(new FlowLayout());
+                butonLoginApasat();
+                dispose();
+            }
 
-                JLabel label = new JLabel("Operatiune efectuată  cu succes");
-                dialog.add(label);
-
-                JButton closeButton = new JButton("Close");
-                closeButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        dialog.dispose();
-                    }
-                });
-                dialog.add(closeButton);
-
-                dialog.setSize(300, 200);
-                dialog.setLocationRelativeTo(frame);
-                dialog.setVisible(true);
+            private void butonLoginApasat() {
+            LocalDateTime currentDateTime = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String formattedDateTime = currentDateTime.format(formatter);
+            LOGGER.log(Level.INFO, "Buton apasat la: " + formattedDateTime);
             }
         });
+        panel.add(button);
 
-        JPanel panel = new JPanel();
-        panel.add(openModalButton);
-        frame.add(panel);
-        frame.setVisible(true);
+        getContentPane().add(panel);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        pack();
+        setLocationRelativeTo(frame);
+        setVisible(true);
     }
 }
-*/
+ 

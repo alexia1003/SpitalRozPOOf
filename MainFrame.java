@@ -1,13 +1,20 @@
 package SpitalRoz;
 
 import javax.swing.*;
+import javax.swing.text.JTextComponent;
+
 import java.awt.event.*;
 import java.awt.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MainFrame extends JFrame {
+public class MainFrame extends JFrame implements IMainFrame {
+
+    // Campuri private
+    private JComboBox<String> roluriDropdown;
+    private JTextComponent parolaField;
+    private AbstractButton medicRezidentCheckBox;
 
     public MainFrame() {
         setTitle("Personal medical");
@@ -20,15 +27,15 @@ public class MainFrame extends JFrame {
 
         // Drop-down menu
         String[] roluri = {"Medic", "Asistent"};
-        JComboBox<String> roluriDropdown = new JComboBox<>(roluri);
+        roluriDropdown = new JComboBox<>(roluri);
         panel.add(roluriDropdown);
 
         // Password field
-        JTextField parolaField = new JTextField(20);
+        parolaField = new JTextField(20);
         panel.add(parolaField);
 
         // Check box
-        JCheckBox medicRezidentCheckBox = new JCheckBox("Rezident");
+        medicRezidentCheckBox = new JCheckBox("Rezident");
         panel.add(medicRezidentCheckBox);
 
         // Submit button
@@ -36,30 +43,33 @@ public class MainFrame extends JFrame {
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String rolSelectat = (String) roluriDropdown.getSelectedItem();
-                String parola = parolaField.getText();
-                boolean esteMedicRezident = medicRezidentCheckBox.isSelected();
-                String parolaCorecta = "1234"; // Correct password
-
-                if (parola.equals(parolaCorecta)) {
-                new Window3(MainFrame.this, "Loggare", "Esti sigur ca vrei sa te loghezi?");
-
-                //JOptionPane.showMessageDialog(MainFrame.this, "Operatiune efectuată  cu succes");
-                new Window1(rolSelectat, parola, esteMedicRezident).setVisible(true);
-
-                System.out.println("Selected Role: " + rolSelectat);
-                System.out.println("Password: " + parola);
-                System.out.println("Medic Rezident: " + esteMedicRezident);
-            } else {
-                JOptionPane.showMessageDialog(MainFrame.this, "Parola incorecta. Va rugam incercati din nou.", "Eroare", JOptionPane.ERROR_MESSAGE);
-            }            
-            }
+                login();
+            } 
         });
         panel.add(submitButton);
 
         add(panel);
         setVisible(true);
     }
+        
+    @Override
+    public void login() {
+        String rolSelectat = (String) roluriDropdown.getSelectedItem();
+        String parola = parolaField.getText();
+        boolean esteMedicRezident = medicRezidentCheckBox.isSelected();
+        String parolaCorecta = "1234"; // Correct password
+        if (parola.equals(parolaCorecta)) {
+            new Window3(MainFrame.this, "Log in", "Sunteți sigur că doriți să vă conectați?");
+            new Window1(rolSelectat, parola, esteMedicRezident).setVisible(true);
+            
+            System.out.println("Rol selectat: " + rolSelectat);
+            System.out.println("Parola: " + parola);
+            System.out.println("Medic Rezident: " + esteMedicRezident);
+        } else {
+            JOptionPane.showMessageDialog(MainFrame.this, "Parola incorecta. Va rugam incercati din nou.", "Eroare", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+ 
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
