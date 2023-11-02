@@ -94,16 +94,5 @@ public class Window1 extends JFrame {
         sectieField.setText(sectie);
     }
     
-    /* 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            String rol = "Medic"; // Examplu rol
-            String parola = "parola"; // Examplu parola
-            boolean eMedicRezident = true; // Examplu val. MedicRezident
-
-            Window1 window1 = new Window1(rol, parola, eMedicRezident);
-            window1.setVisible(true);
-        });
-    }
-*/
+    
 }
